@@ -1,7 +1,7 @@
 /**
  * @name Unlink
  * @author yudachix
- * @version 1.1.1
+ * @version 1.1.2
  * @description Remove links to files, URLs, etc.
  * @website https://github.com/yudachix/betterdiscord-plugins
  * @source https://github.com/yudachix/betterdiscord-plugins/blob/main/Unlink/Unlink.plugin.js
@@ -13,7 +13,7 @@ const config = {
   info: {
     name: 'Unlink',
     author: 'yudachix',
-    version: '1.1.1',
+    version: '1.1.2',
     description: 'Remove links to files, URLs, etc.',
     updateUrl: 'https://raw.githubusercontent.com/yudachix/betterdiscord-plugins/main/Unlink/Unlink.plugin.js'
   }
@@ -22,6 +22,28 @@ const config = {
 module.exports = class Unlink {
   getName() {
     return config.info.name
+  }
+
+  #checkUpdate() {
+    try {
+      ZeresPluginLibrary.PluginUpdater.checkForUpdate(config.info.name, config.info.version, config.info.updateUrl)
+    } catch (error) {
+      console.error(this.getName(), 'Plugin Updater could not be reached, attempting to enable plugin.', error)
+
+      try {
+        BdApi.Plugins.enable('ZeresPluginLibrary')
+
+        if (!BdApi.Plugins.isEnabled('ZeresPluginLibrary')) {
+          throw new Error('Failed to enable ZeresPluginLibrary.')
+        }
+
+        ZeresPluginLibrary.PluginUpdater.checkForUpdate(config.info.name, config.info.version, config.info.updateUrl)
+      } catch (error) {
+        console.error(this.getName(), 'Failed to enable ZeresPluginLibrary for Plugin Updater.', err)
+        BdApi.alert('Could not enable or find ZeresPluginLibrary', 'Could not start the plugin because ZeresPluginLibrary could not be found or enabled. Please enable and/or download it manually in your plugins folder.')
+        this.stop()
+      }
+    }
   }
 
   load() {
@@ -56,25 +78,7 @@ module.exports = class Unlink {
       )
     }
 
-    try {
-      ZeresPluginLibrary.PluginUpdater.checkForUpdate(config.info.name, config.info.version, config.info.updateUrl)
-    } catch (error) {
-      console.error(this.getName(), 'Plugin Updater could not be reached, attempting to enable plugin.', error)
-
-      try {
-        BdApi.Plugins.enable('ZeresPluginLibrary')
-
-        if (!BdApi.Plugins.isEnabled('ZeresPluginLibrary')) {
-          throw new Error('Failed to enable ZeresPluginLibrary.')
-        }
-
-        ZeresPluginLibrary.PluginUpdater.checkForUpdate(config.info.name, config.info.version, config.info.updateUrl)
-      } catch (error) {
-        console.error(this.getName(), 'Failed to enable ZeresPluginLibrary for Plugin Updater.', err)
-        BdApi.alert('Could not enable or find ZeresPluginLibrary', 'Could not start the plugin because ZeresPluginLibrary could not be found or enabled. Please enable and/or download it manually in your plugins folder.')
-        this.stop()
-      }
-    }
+    this.#checkUpdate()
   }
 
   /**
@@ -157,6 +161,8 @@ module.exports = class Unlink {
   }
 
   start() {
+    this.#checkUpdate()
+
     BdApi.injectCSS(
       this.getName(),
       (
