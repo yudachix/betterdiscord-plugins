@@ -1,7 +1,7 @@
 /**
  * @name Unlink
  * @author yudachix
- * @version 1.1.0
+ * @version 1.1.1
  * @description Remove links to files, URLs, etc.
  * @website https://github.com/yudachix/betterdiscord-plugins
  * @source https://github.com/yudachix/betterdiscord-plugins/blob/main/Unlink/Unlink.plugin.js
@@ -13,7 +13,7 @@ const config = {
   info: {
     name: 'Unlink',
     author: 'yudachix',
-    version: '1.1.0',
+    version: '1.1.1',
     description: 'Remove links to files, URLs, etc.',
     updateUrl: 'https://raw.githubusercontent.com/yudachix/betterdiscord-plugins/main/Unlink/Unlink.plugin.js'
   }
@@ -25,38 +25,36 @@ module.exports = class Unlink {
   }
 
   load() {
-    if (typeof ZeresPluginLibrary !== 'undefined') {
-      return
-    }
+    if (typeof ZeresPluginLibrary === 'undefined') {
+      BdApi.showConfirmationModal(
+        'Library Missing',
+        `The library plugin needed for ${this.getName()} is missing. Please click Download Now to install it.`,
+        {
+          confirmText: 'Download Now',
+          cancelText: 'Cancel',
+          onConfirm() {
+            require('https').get(
+              'https://rauenzi.github.io/BDPluginLibrary/release/0PluginLibrary.plugin.js',
+              res => {
+                const { statusCode } = res
 
-    BdApi.showConfirmationModal(
-      'Library Missing',
-      `The library plugin needed for ${this.getName()} is missing. Please click Download Now to install it.`,
-      {
-        confirmText: 'Download Now',
-        cancelText: 'Cancel',
-        onConfirm() {
-          require('https').get(
-            'https://rauenzi.github.io/BDPluginLibrary/release/0PluginLibrary.plugin.js',
-            res => {
-              const { statusCode } = res
+                if (200 > statusCode || statusCode >= 400) {
+                  return
+                }
 
-              if (200 > statusCode || statusCode >= 400) {
-                return
+                let body = ''
+
+                res.on('data', chunk => body += chunk)
+                res.on('end', () => require('fs').writeFileSync(
+                  require('path').join(BdApi.Plugins.folder, '0PluginLibrary.plugin.js'),
+                  body
+                ))
               }
-
-              let body = ''
-
-              res.on('data', chunk => body += chunk)
-              res.on('end', () => require('fs').writeFileSync(
-                require('path').join(BdApi.Plugins.folder, '0PluginLibrary.plugin.js'),
-                body
-              ))
-            }
-          )
+            )
+          }
         }
-      }
-    )
+      )
+    }
 
     try {
       ZeresPluginLibrary.PluginUpdater.checkForUpdate(config.info.name, config.info.version, config.info.updateUrl)
