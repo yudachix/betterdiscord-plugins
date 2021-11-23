@@ -1,7 +1,7 @@
 /**
  * @name Unlink
  * @author yudachix
- * @version 1.2.0
+ * @version 1.3.0
  * @description Remove links to files, URLs, etc.
  * @website https://github.com/yudachix/betterdiscord-plugins
  * @source https://github.com/yudachix/betterdiscord-plugins/blob/main/Unlink/Unlink.plugin.js
@@ -41,7 +41,7 @@ module.exports = class Unlink {
       /**
        * @readonly
        */
-      version: '1.2.0',
+      version: '1.3.0',
 
       /**
        * @readonly
@@ -167,6 +167,7 @@ module.exports = class Unlink {
     // links
     'div[class*="imageDetails-"] a[class*="anchor-"], ' +
     'div[class*="modal-"] a[class*="anchor-"], ' +
+    'div[role="dialog"] div[class*="cozyMessage-"] a[class*="anchor-"], ' +
     'div[class*="userBio-"] > a[class*="anchor-"], ' +
     'div[class*="aboutMeBody-"] > a[class*="anchor-"], ' +
     'div[class*="topic-"] > a[class*="anchor-"], ' +
@@ -209,7 +210,7 @@ module.exports = class Unlink {
     this.#checkUpdate()
     Unlink.#BdApi.injectCSS(
       Unlink.#config.info.name,
-      `${Unlink.#anchorLinkSelector} { cursor: not-allowed; }`
+      `${Unlink.#anchorLinkSelector} { cursor: not-allowed !important; color: #bbbbbb !important; text-decoration: none !important; }`
     )
     this.#unlink()
   }
