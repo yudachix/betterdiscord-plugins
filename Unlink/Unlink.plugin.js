@@ -1,7 +1,7 @@
 /**
  * @name Unlink
  * @author yudachix
- * @version 1.4.2
+ * @version 1.4.3
  * @description Remove links to files, URLs, etc.
  * @website https://github.com/yudachix/betterdiscord-plugins
  * @source https://github.com/yudachix/betterdiscord-plugins/blob/main/Unlink/Unlink.plugin.js
@@ -40,7 +40,7 @@ module.exports = class Unlink {
       /**
        * @readonly
        */
-      version: '1.4.2',
+      version: '1.4.3',
 
       /**
        * @readonly
@@ -165,15 +165,15 @@ module.exports = class Unlink {
 
     // links
     'div[class*="imageDetails-"] a[class*="anchor-"], ' +
-    'div[class*="modal-"] > div[class*="content-"] a[class*="anchor-"], ' +
+    'div[class*="modal-"] div[class*="content-"] a[class*="anchor-"], ' +
     'div[role="dialog"] div[class*="cozyMessage-"] a[class*="anchor-"], ' +
-    'div[class*="userBio-"] > a[class*="anchor-"], ' +
-    'div[class*="aboutMeBody-"] > a[class*="anchor-"], ' +
-    'div[class*="topic-"] > a[class*="anchor-"], ' +
-    'div[class*="channelName-"] > a[class*="anchor-"], ' +
-    'div[class*="channelDescription-"] > a[class*="anchor-"], ' +
-    'div[class*="locationText-"] > a[class*="anchor-"], ' +
-    'div[class*="externalLocation-"] > a[class*="anchor-"], ' +
+    'div[class*="userBio-"] a[class*="anchor-"], ' +
+    'div[class*="aboutMeBody-"] a[class*="anchor-"], ' +
+    'div[class*="topic-"] a[class*="anchor-"], ' +
+    'div[class*="channelName-"] a[class*="anchor-"], ' +
+    'div[class*="channelDescription-"] a[class*="anchor-"], ' +
+    'div[class*="locationText-"] a[class*="anchor-"], ' +
+    'div[class*="externalLocation-"] a[class*="anchor-"], ' +
     'div[class*="messageContent-"] a[class*="anchor-"][target="_blank"], ' +
     'a[class*="embedLink-"], ' +
     'a[class*="fileNameLink-"], ' +
