@@ -1,7 +1,7 @@
 /**
  * @name Unlink
  * @author yudachix
- * @version 1.4.0
+ * @version 1.4.1
  * @description Remove links to files, URLs, etc.
  * @website https://github.com/yudachix/betterdiscord-plugins
  * @source https://github.com/yudachix/betterdiscord-plugins/blob/main/Unlink/Unlink.plugin.js
@@ -26,7 +26,6 @@ module.exports = class Unlink {
     /**
      * @readonly
      */
-
     info: Object.freeze({
       /**
        * @readonly
@@ -41,7 +40,7 @@ module.exports = class Unlink {
       /**
        * @readonly
        */
-      version: '1.4.0',
+      version: '1.4.1',
 
       /**
        * @readonly
