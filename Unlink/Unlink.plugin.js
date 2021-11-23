@@ -1,7 +1,7 @@
 /**
  * @name Unlink
  * @author yudachix
- * @version 1.3.0
+ * @version 1.4.0
  * @description Remove links to files, URLs, etc.
  * @website https://github.com/yudachix/betterdiscord-plugins
  * @source https://github.com/yudachix/betterdiscord-plugins/blob/main/Unlink/Unlink.plugin.js
@@ -41,7 +41,7 @@ module.exports = class Unlink {
       /**
        * @readonly
        */
-      version: '1.3.0',
+      version: '1.4.0',
 
       /**
        * @readonly
@@ -156,7 +156,6 @@ module.exports = class Unlink {
     'a[class*="downloadSection-"], ' +
     'a[class*="metadataDownload-"], ' +
     'a[class*="downloadLink-"][target="_blank"], ' +
-    'a[class*="downloadLink-"][target="_blank"] + span[class*="downloadLink-"], ' +
 
     // open links
     '#message-open-native-link, ' +
@@ -166,7 +165,7 @@ module.exports = class Unlink {
 
     // links
     'div[class*="imageDetails-"] a[class*="anchor-"], ' +
-    'div[class*="modal-"] a[class*="anchor-"], ' +
+    'div[class*="modal-"] > div[class*="content-"] a[class*="anchor-"], ' +
     'div[role="dialog"] div[class*="cozyMessage-"] a[class*="anchor-"], ' +
     'div[class*="userBio-"] > a[class*="anchor-"], ' +
     'div[class*="aboutMeBody-"] > a[class*="anchor-"], ' +
@@ -175,7 +174,7 @@ module.exports = class Unlink {
     'div[class*="channelDescription-"] > a[class*="anchor-"], ' +
     'div[class*="locationText-"] > a[class*="anchor-"], ' +
     'div[class*="externalLocation-"] > a[class*="anchor-"], ' +
-    'div[class*="messageContent-"] > a[class*="anchor-"], ' +
+    'div[class*="messageContent-"] a[class*="anchor-"], ' +
     'a[class*="embedLink-"], ' +
     'a[class*="fileNameLink-"], ' +
     'a[class*="metadataName-"]'
@@ -210,7 +209,7 @@ module.exports = class Unlink {
     this.#checkUpdate()
     Unlink.#BdApi.injectCSS(
       Unlink.#config.info.name,
-      `${Unlink.#anchorLinkSelector} { cursor: not-allowed !important; color: #bbbbbb !important; text-decoration: none !important; }`
+      `${Unlink.#anchorLinkSelector} { cursor: not-allowed !important; color: #bbb !important; text-decoration: none !important; }`
     )
     this.#unlink()
   }
