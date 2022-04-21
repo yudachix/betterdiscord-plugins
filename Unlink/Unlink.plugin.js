@@ -1,7 +1,7 @@
 /**
  * @name Unlink
  * @author yudachix
- * @version 1.5.0
+ * @version 1.5.1
  * @description Remove links to files, URLs, etc.
  * @website https://github.com/yudachix/betterdiscord-plugins
  * @source https://github.com/yudachix/betterdiscord-plugins/blob/main/Unlink/Unlink.plugin.js
@@ -22,7 +22,7 @@ class Unlink {
       /** @readonly */
       author: 'yudachix',
       /** @readonly */
-      version: '1.5.0',
+      version: '1.5.1',
       /** @readonly */
       description: 'Remove links to files, URLs, etc.',
       /** @readonly */
@@ -136,21 +136,21 @@ class Unlink {
     'div[class*="connectedAccounts-"] a[class*="anchor-"], ' +
 
     // links
-    'div[class*="imageDetails-"] a[class*="anchor-"], ' +
-    'div[class*="modal-"] div[class*="content-"] a[class*="anchor-"], ' +
-    'div[role="dialog"] div[class*="cozyMessage-"] a[class*="anchor-"], ' +
-    'div[class*="userBio-"] a[class*="anchor-"], ' +
-    'div[class*="aboutMeBody-"] a[class*="anchor-"], ' +
-    'div[class*="topic-"] a[class*="anchor-"], ' +
-    'div[class*="channelName-"] a[class*="anchor-"], ' +
-    'div[class*="channelDescription-"] a[class*="anchor-"], ' +
-    'div[class*="locationText-"] a[class*="anchor-"], ' +
-    'div[class*="externalLocation-"] a[class*="anchor-"], ' +
-    'div[class*="messageContent-"] a[class*="anchor-"][target="_blank"], ' +
-    'div[class*="embedDescription-"] a[class*="anchor-"], ' +
-    'a[class*="embedLink-"], ' +
-    'a[class*="fileNameLink-"], ' +
-    'a[class*="metadataName-"]'
+    'div[class*="imageDetails-"] a[class*="anchor-"]:not(a[href^="https://discord.com/channels/"]), ' +
+    'div[class*="modal-"] div[class*="content-"] a[class*="anchor-"]:not(a[href^="https://discord.com/channels/"]), ' +
+    'div[role="dialog"] div[class*="cozyMessage-"] a[class*="anchor-"]:not(a[href^="https://discord.com/channels/"]), ' +
+    'div[class*="userBio-"] a[class*="anchor-"]:not(a[href^="https://discord.com/channels/"]), ' +
+    'div[class*="aboutMeBody-"] a[class*="anchor-"]:not(a[href^="https://discord.com/channels/"]), ' +
+    'div[class*="topic-"] a[class*="anchor-"]:not(a[href^="https://discord.com/channels/"]), ' +
+    'div[class*="channelName-"] a[class*="anchor-"]:not(a[href^="https://discord.com/channels/"]), ' +
+    'div[class*="channelDescription-"] a[class*="anchor-"]:not(a[href^="https://discord.com/channels/"]), ' +
+    'div[class*="locationText-"] a[class*="anchor-"]:not(a[href^="https://discord.com/channels/"]), ' +
+    'div[class*="externalLocation-"] a[class*="anchor-"]:not(a[href^="https://discord.com/channels/"]), ' +
+    'div[class*="messageContent-"] a[class*="anchor-"][target="_blank"]:not(a[href^="https://discord.com/channels/"]), ' +
+    'div[class*="embedDescription-"] a[class*="anchor-"]:not(a[href^="https://discord.com/channels/"]), ' +
+    'a[class*="embedLink-"]:not(a[href^="https://discord.com/channels/"]), ' +
+    'a[class*="fileNameLink-"]:not(a[href^="https://discord.com/channels/"]), ' +
+    'a[class*="metadataName-"]:not(a[href^="https://discord.com/channels/"])'
   )
 
   #unlink() {
@@ -158,7 +158,7 @@ class Unlink {
     const onClickAnchorLink = Unlink.#onClickAnchorLink
 
     for (const anchorLink of document.querySelectorAll(Unlink.#anchorLinkSelector)) {
-      if (/^https:\/\/discord\.com\/channels\/\d+\/\d+\/\d+$/.test(anchorLink.href) || disabledAnchorElements.has(anchorLink)) {
+      if (disabledAnchorElements.has(anchorLink)) {
         continue
       }
 
