@@ -1,55 +1,31 @@
 /**
  * @name Unlink
  * @author yudachix
- * @version 1.4.4
+ * @version 1.5.0
  * @description Remove links to files, URLs, etc.
  * @website https://github.com/yudachix/betterdiscord-plugins
  * @source https://github.com/yudachix/betterdiscord-plugins/blob/main/Unlink/Unlink.plugin.js
  * @updateUrl https://raw.githubusercontent.com/yudachix/betterdiscord-plugins/main/Unlink/Unlink.plugin.js
  */
 
-module.exports = class Unlink {
-  /**
-   * @readonly
-   */
+class Unlink {
+  /** @readonly */
   static #BdApi = globalThis.BdApi
-
-  /**
-   * @readonly
-   */
+  /** @readonly */
   static #ZeresPluginLibrary = globalThis.ZeresPluginLibrary
-
-  /**
-   * @readonly
-   */
+  /** @readonly */
   static #config = Object.freeze({
-    /**
-     * @readonly
-     */
+    /** @readonly */
     info: Object.freeze({
-      /**
-       * @readonly
-       */
+      /** @readonly */
       name: 'Unlink',
-
-      /**
-       * @readonly
-       */
+      /** @readonly */
       author: 'yudachix',
-
-      /**
-       * @readonly
-       */
-      version: '1.4.4',
-
-      /**
-       * @readonly
-       */
+      /** @readonly */
+      version: '1.5.0',
+      /** @readonly */
       description: 'Remove links to files, URLs, etc.',
-
-      /**
-       * @readonly
-       */
+      /** @readonly */
       updateUrl: 'https://raw.githubusercontent.com/yudachix/betterdiscord-plugins/main/Unlink/Unlink.plugin.js'
     })
   })
@@ -137,18 +113,14 @@ module.exports = class Unlink {
    */
   static #disabledAnchorElements = new Set
 
-  /**
-   * @param {MouseEvent} eventData
-   */
+  /** @param {MouseEvent} eventData */
   static #onClickAnchorLink(eventData) {
     eventData.preventDefault()
     eventData.stopImmediatePropagation()
     eventData.stopPropagation()
   }
 
-  /**
-   * @readonly
-   */
+  /** @readonly */
   static #anchorLinkSelector = (
     // download links
     'svg[class*="downloadButton-"], ' +
@@ -186,7 +158,7 @@ module.exports = class Unlink {
     const onClickAnchorLink = Unlink.#onClickAnchorLink
 
     for (const anchorLink of document.querySelectorAll(Unlink.#anchorLinkSelector)) {
-      if (disabledAnchorElements.has(anchorLink)) {
+      if (/^https:\/\/discord\.com\/channels\/\d+\/\d+\/\d+$/.test(anchorLink.href) || disabledAnchorElements.has(anchorLink)) {
         continue
       }
 
@@ -195,9 +167,7 @@ module.exports = class Unlink {
     }
   }
 
-  /**
-   * @param {MutationRecord} record
-   */
+  /** @param {MutationRecord} record */
   observer(record) {
     if (record.type !== 'childList') {
       return
@@ -227,3 +197,5 @@ module.exports = class Unlink {
     }
   }
 }
+
+module.exports = Unlink
